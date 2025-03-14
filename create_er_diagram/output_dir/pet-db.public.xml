@@ -115,5 +115,27 @@
             <column ascending="true" name="service_id"/>
          </index>
       </table>
+      <table name="vacine" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="vacine_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="vacinetype_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="vacinetype_id" foreignKey="fk_vacine_vacinetype" implied="false" onDeleteCascade="false" schema="public" table="vacinetype"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="2" name="datevac" nullable="false" remarks="" size="29" type="timestamp" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="skanurl" nullable="false" remarks="" size="30" type="varchar" typeCode="12"/>
+         <primaryKey column="vacine_id" sequenceNumberInPK="1"/>
+         <index name="vacine_pk" unique="true">
+            <column ascending="true" name="vacine_id"/>
+         </index>
+      </table>
+      <table name="vacinetype" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="vacinetype_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <child column="vacinetype_id" foreignKey="fk_vacine_vacinetype" implied="false" onDeleteCascade="false" schema="public" table="vacine"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="name" nullable="false" remarks="" size="15" type="varchar" typeCode="12"/>
+         <primaryKey column="vacinetype_id" sequenceNumberInPK="1"/>
+         <index name="vacinetype_pk" unique="true">
+            <column ascending="true" name="vacinetype_id"/>
+         </index>
+      </table>
    </tables>
 </database>

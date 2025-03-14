@@ -1,8 +1,10 @@
 person
 service
 pet_type
+vacinetype
 owner
 employee
 pet
+vacine
 employee_service
 order1
