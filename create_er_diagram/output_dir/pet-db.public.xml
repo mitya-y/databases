@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?><database name="pet-db" schema="public" type="PostgreSQL - 17.2">
+   <tables>
+      <table name="employee" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="employee_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <child column="employee_id" foreignKey="fk_empl_serv_employee" implied="false" onDeleteCascade="false" schema="public" table="employee_service"/>
+            <child column="employee_id" foreignKey="fk_order_employee" implied="false" onDeleteCascade="false" schema="public" table="order1"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="spec" nullable="true" remarks="" size="15" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="person_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="person_id" foreignKey="fk_employee_person" implied="false" onDeleteCascade="false" schema="public" table="person"/>
+         </column>
+         <primaryKey column="employee_id" sequenceNumberInPK="1"/>
+         <index name="employee_pk" unique="true">
+            <column ascending="true" name="employee_id"/>
+         </index>
+      </table>
+      <table name="employee_service" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="employee_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="employee_id" foreignKey="fk_empl_serv_employee" implied="false" onDeleteCascade="false" schema="public" table="employee"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="service_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="service_id" foreignKey="fk_empl_serv_service" implied="false" onDeleteCascade="false" schema="public" table="service"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="is_basic" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+      </table>
+      <table name="order1" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="order_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="owner_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="owner_id" foreignKey="fk_order_0wner" implied="false" onDeleteCascade="false" schema="public" table="owner"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="service_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="service_id" foreignKey="fk_order_service" implied="false" onDeleteCascade="false" schema="public" table="service"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="pet_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="pet_id" foreignKey="fk_order_pet" implied="false" onDeleteCascade="false" schema="public" table="pet"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="employee_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="employee_id" foreignKey="fk_order_employee" implied="false" onDeleteCascade="false" schema="public" table="employee"/>
+         </column>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="5" name="time_order" nullable="false" remarks="" size="29" type="timestamp" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="6" name="is_done" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="mark" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="comments" nullable="true" remarks="" size="50" type="varchar" typeCode="12"/>
+         <primaryKey column="order_id" sequenceNumberInPK="1"/>
+         <index name="order_pk" unique="true">
+            <column ascending="true" name="order_id"/>
+         </index>
+         <checkConstraint constraint="(is_done = ANY (ARRAY[0, 1]))" name="order_is_done"/>
+      </table>
+      <table name="owner" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="owner_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <child column="owner_id" foreignKey="fk_order_0wner" implied="false" onDeleteCascade="false" schema="public" table="order1"/>
+            <child column="owner_id" foreignKey="fk_pet_0wner" implied="false" onDeleteCascade="false" schema="public" table="pet"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="description" nullable="true" remarks="" size="50" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="person_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="person_id" foreignKey="fk_owner_person" implied="false" onDeleteCascade="false" schema="public" table="person"/>
+         </column>
+         <primaryKey column="owner_id" sequenceNumberInPK="1"/>
+         <index name="owner_pk" unique="true">
+            <column ascending="true" name="owner_id"/>
+         </index>
+      </table>
+      <table name="person" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="person_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <child column="person_id" foreignKey="fk_employee_person" implied="false" onDeleteCascade="false" schema="public" table="employee"/>
+            <child column="person_id" foreignKey="fk_owner_person" implied="false" onDeleteCascade="false" schema="public" table="owner"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="last_name" nullable="false" remarks="" size="20" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="first_name" nullable="true" remarks="" size="20" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="phone" nullable="false" remarks="" size="15" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="address" nullable="false" remarks="" size="50" type="varchar" typeCode="12"/>
+         <primaryKey column="person_id" sequenceNumberInPK="1"/>
+         <index name="person_pk" unique="true">
+            <column ascending="true" name="person_id"/>
+         </index>
+      </table>
+      <table name="pet" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="pet_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <child column="pet_id" foreignKey="fk_order_pet" implied="false" onDeleteCascade="false" schema="public" table="order1"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="nick" nullable="false" remarks="" size="15" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="breed" nullable="true" remarks="" size="20" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="age" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="description" nullable="true" remarks="" size="50" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="pet_type_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="pet_type_id" foreignKey="fk_pet_pet_type" implied="false" onDeleteCascade="false" schema="public" table="pet_type"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="owner_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="owner_id" foreignKey="fk_pet_0wner" implied="false" onDeleteCascade="false" schema="public" table="owner"/>
+         </column>
+         <primaryKey column="pet_id" sequenceNumberInPK="1"/>
+         <index name="pet_pk" unique="true">
+            <column ascending="true" name="pet_id"/>
+         </index>
+      </table>
+      <table name="pet_type" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="pet_type_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <child column="pet_type_id" foreignKey="fk_pet_pet_type" implied="false" onDeleteCascade="false" schema="public" table="pet"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="name" nullable="false" remarks="" size="15" type="varchar" typeCode="12"/>
+         <primaryKey column="pet_type_id" sequenceNumberInPK="1"/>
+         <index name="pet_type_pk" unique="true">
+            <column ascending="true" name="pet_type_id"/>
+         </index>
+      </table>
+      <table name="service" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="service_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <child column="service_id" foreignKey="fk_empl_serv_service" implied="false" onDeleteCascade="false" schema="public" table="employee_service"/>
+            <child column="service_id" foreignKey="fk_order_service" implied="false" onDeleteCascade="false" schema="public" table="order1"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="name" nullable="false" remarks="" size="15" type="varchar" typeCode="12"/>
+         <primaryKey column="service_id" sequenceNumberInPK="1"/>
+         <index name="service_pk" unique="true">
+            <column ascending="true" name="service_id"/>
+         </index>
+      </table>
+   </tables>
+</database>
