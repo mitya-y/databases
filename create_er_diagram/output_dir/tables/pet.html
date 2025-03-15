@@ -122,6 +122,11 @@
                                                 <td class="constraint detail">fk_order_pet</td>
                                                 <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
+                                            <tr>
+                                                <td title="vacine.pet_id references pet.pet_id via fk_vacine_pet"><a href='vacine.html'>vacine</a><span class='relatedKey'>.pet_id</span></td>
+                                                <td class="constraint detail">fk_vacine_pet</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
                                         </table>
                                     </td>
                                     <td>
@@ -194,28 +199,6 @@
                                     </td>
                                     <td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
-                                        </table>
-                                    </td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="vacine_id">vacine_id</span></td>
-                                    <td>int4</td>
-                                    <td>10</td>
-                                    <td title=''></td>
-                                    <td title=''></td>
-                                    <td>null</td>
-                                    <td>
-                                        <table border='0' cellspacing='0' cellpadding='0'>
-                                        </table>
-                                    </td>
-                                    <td>
-                                        <table border='0' cellspacing='0' cellpadding='0'>
-                                            <tr>
-                                                <td title="pet.vacine_id references vacine.vacine_id via fk_pet_vacine"><a href='vacine.html'>vacine</a><span class='relatedKey'>.vacine_id</span></td>
-                                                <td class="constraint detail">fk_pet_vacine</td>
-                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
-                                            </tr>
                                         </table>
                                     </td>
                                     <td></td>
@@ -323,25 +306,25 @@
                                 <div class="tab-content no-padding">
                                     <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
-<area shape="rect" id="node1" href="order1.html" target="_top" title="order1" alt="" coords="517,101,678,342">
-<area shape="rect" id="node2" href="owner.html" target="_top" title="owner" alt="" coords="16,317,167,470">
-<area shape="rect" id="node3" href="pet.html" target="_top" title="pet" alt="" coords="221,8,473,316">
-<area shape="rect" id="node4" href="pet_type.html" target="_top" title="pet_type" alt="" coords="11,176,172,299">
-<area shape="rect" id="node5" href="vacine.html" target="_top" title="vacine" alt="" coords="5,5,177,158">
+<area shape="rect" id="node1" href="order1.html" target="_top" title="order1" alt="" coords="511,245,672,486">
+<area shape="rect" id="node2" href="owner.html" target="_top" title="owner" alt="" coords="10,315,161,467">
+<area shape="rect" id="node3" href="pet.html" target="_top" title="pet" alt="" coords="210,61,462,340">
+<area shape="rect" id="node4" href="pet_type.html" target="_top" title="pet_type" alt="" coords="5,173,166,297">
+<area shape="rect" id="node5" href="vacine.html" target="_top" title="vacine" alt="" coords="506,5,678,187">
 </map>
                                         <a name='diagram'><img id="oneDegreeImg" src="../diagrams/tables/pet.1degree.png" usemap="#oneDegreeRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>
                                     <div class="chart tab-pane " id="twodegreesDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="twoDegreesRelationshipsDiagram" name="twoDegreesRelationshipsDiagram">
-<area shape="rect" id="node1" href="employee.html" target="_top" title="employee" alt="" coords="488,388,658,482">
-<area shape="rect" id="node2" href="person.html" target="_top" title="person" alt="" coords="24,351,169,445">
-<area shape="rect" id="node3" href="order1.html" target="_top" title="order1" alt="" coords="743,353,887,447">
-<area shape="rect" id="node4" href="owner.html" target="_top" title="owner" alt="" coords="248,317,387,411">
-<area shape="rect" id="node5" href="pet.html" target="_top" title="pet" alt="" coords="448,12,699,320">
-<area shape="rect" id="node6" href="service.html" target="_top" title="service" alt="" coords="500,500,647,594">
-<area shape="rect" id="node7" href="pet_type.html" target="_top" title="pet_type" alt="" coords="237,176,398,299">
-<area shape="rect" id="node8" href="vacine.html" target="_top" title="vacine" alt="" coords="232,5,404,158">
-<area shape="rect" id="node9" href="vacinetype.html" target="_top" title="vacinetype" alt="" coords="5,36,188,130">
+<area shape="rect" id="node1" href="employee.html" target="_top" title="employee" alt="" coords="194,5,365,99">
+<area shape="rect" id="node2" href="person.html" target="_top" title="person" alt="" coords="5,60,150,154">
+<area shape="rect" id="node3" href="order1.html" target="_top" title="order1" alt="" coords="718,85,862,179">
+<area shape="rect" id="node4" href="owner.html" target="_top" title="owner" alt="" coords="210,117,349,211">
+<area shape="rect" id="node5" href="pet.html" target="_top" title="pet" alt="" coords="409,118,660,397">
+<area shape="rect" id="node6" href="service.html" target="_top" title="service" alt="" coords="460,415,608,509">
+<area shape="rect" id="node7" href="pet_type.html" target="_top" title="pet_type" alt="" coords="199,267,360,390">
+<area shape="rect" id="node8" href="vacine.html" target="_top" title="vacine" alt="" coords="704,325,876,507">
+<area shape="rect" id="node9" href="vacinetype.html" target="_top" title="vacinetype" alt="" coords="443,527,626,621">
 </map>
                                         <a name='diagram'><img id="twodegreesDegreeImg" src="../diagrams/tables/pet.2degrees.png" usemap="#twoDegreesRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>
