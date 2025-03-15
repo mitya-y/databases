@@ -7,6 +7,8 @@ DROP TABLE Employee_Service;
 DROP TABLE Service;
 DROP TABLE Pet;
 DROP TABLE Pet_Type;
+DROP TABLE Vacine;
+DROP TABLE VacineType;
 DROP TABLE Employee;
 DROP TABLE Owner;
 DROP TABLE Person;

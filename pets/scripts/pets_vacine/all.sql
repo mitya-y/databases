@@ -21,6 +21,22 @@ CREATE TABLE Employee(
 CONSTRAINT Employee_PK PRIMARY KEY (Employee_ID)
 )
 ;
+
+-------- Vacine ------- 
+CREATE TABLE VacineType(
+    VacineType_ID           INTEGER      NOT NULL,
+    Name	              VARCHAR(15)  NOT NULL,
+CONSTRAINT VacineType_PK PRIMARY KEY (VacineType_ID)
+);
+
+CREATE TABLE Vacine(
+    Vacine_ID               INTEGER      NOT NULL,
+    VacineType_ID           INTEGER      NOT NULL,
+    DateVac                 TIMESTAMP    DEFAULT NOW() NOT NULL,
+    SkanUrl	              VARCHAR(30)  NOT NULL,
+CONSTRAINT Vacine_PK PRIMARY KEY (Vacine_ID)
+);
+
 CREATE TABLE Pet_Type(
     Pet_Type_ID           INTEGER      NOT NULL,
     Name	          VARCHAR(15)  NOT NULL,
@@ -33,6 +49,7 @@ CREATE TABLE Pet(
     Breed                   VARCHAR(20),
     Age                     INTEGER,
     Description             VARCHAR(50),
+    Vacine_ID               INTEGER         NOT NULL,
     Pet_Type_ID             INTEGER         NOT NULL,
     Owner_ID                INTEGER         NOT NULL,
 CONSTRAINT Pet_PK PRIMARY KEY (Pet_ID)
@@ -64,21 +81,6 @@ CONSTRAINT Order_Is_Done CHECK (Is_Done in (0,1)),
 CONSTRAINT Order_PK PRIMARY KEY (Order_ID)
 )
 ;
-
--------- Vacine ------- 
-CREATE TABLE VacineType(
-    VacineType_ID           INTEGER      NOT NULL,
-    Name	              VARCHAR(15)  NOT NULL,
-CONSTRAINT VacineType_PK PRIMARY KEY (VacineType_ID)
-);
-
-CREATE TABLE Vacine(
-    Vacine_ID               INTEGER      NOT NULL,
-    VacineType_ID           INTEGER      NOT NULL,
-    DateVac                 TIMESTAMP    NOT NULL,
-    SkanUrl	              VARCHAR(30)  NOT NULL,
-CONSTRAINT Vacine_PK PRIMARY KEY (Vacine_ID)
-);
 
 ---------------------------------------------------------------
 -- Создание FK 
@@ -129,6 +131,11 @@ ALTER TABLE Vacine ADD CONSTRAINT FK_Vacine_VacineType
     FOREIGN KEY (VacineType_ID)
     REFERENCES VacineType(VacineType_ID)
 ;
+ALTER TABLE Pet ADD CONSTRAINT FK_Pet_Vacine
+    FOREIGN KEY (Vacine_ID)
+    REFERENCES Vacine(Vacine_ID)
+;
+
 
 ---------------------------------------------------------------
 -- Заполнение таблиц тестовыми данными
@@ -166,17 +173,19 @@ INSERT INTO Pet_Type(Pet_Type_ID, NAME) VALUES (4, 'FISH');
 INSERT INTO VacineType(VacineType_ID, NAME) VALUES (1, 'chumka');
 INSERT INTO VacineType(VacineType_ID, NAME) VALUES (2, 'crazy');
 
+INSERT INTO Vacine(Vacine_ID, VacineType_ID, SkanUrl) VALUES (1, 1, 'https://bebra.com');
+INSERT INTO Vacine(Vacine_ID, VacineType_ID, SkanUrl) VALUES (2, 2, 'https://arbeb.com');
 
-INSERT INTO Pet(Pet_ID, Nick, Breed, Age, Description, Pet_Type_ID, Owner_ID) VALUES (1, 'Bobik', 'unknown', 3, NULL, 1, 1);
-INSERT INTO Pet(Pet_ID, Nick, Breed, Age, Description, Pet_Type_ID, Owner_ID) VALUES (2, 'Musia', NULL, 12, NULL, 2, 1);
-INSERT INTO Pet(Pet_ID, Nick, Breed, Age, Description, Pet_Type_ID, Owner_ID) VALUES (3, 'Katok', NULL, 2, 'crazy guy', 2, 1);
-INSERT INTO Pet(Pet_ID, Nick, Breed, Age, Description, Pet_Type_ID, Owner_ID) VALUES (4, 'Apelsin', 'poodle', 5, NULL,1, 2);
-INSERT INTO Pet(Pet_ID, Nick, Breed, Age, Description, Pet_Type_ID, Owner_ID) VALUES (5, 'Partizan', 'Siamese', 5, 'very big', 2, 2);
-INSERT INTO Pet(Pet_ID, Nick, Breed, Age, Description, Pet_Type_ID, Owner_ID) VALUES (6, 'Daniel', 'spaniel', 14, NULL, 1, 3);
-INSERT INTO Pet(Pet_ID, Nick, Breed, Age, Description, Pet_Type_ID, Owner_ID) VALUES (7, 'Model', NULL, 5, NULL, 3, 4);
-INSERT INTO Pet(Pet_ID, Nick, Breed, Age, Description, Pet_Type_ID, Owner_ID) VALUES (8, 'Markiz', 'poodle', 1, NULL, 1, 5);
-INSERT INTO Pet(Pet_ID, Nick, Breed, Age, Description, Pet_Type_ID, Owner_ID) VALUES (9, 'Zombi', 'unknown', 7, 'wild', 2, 6);
-INSERT INTO Pet(Pet_ID, Nick, Breed, Age, Description, Pet_Type_ID, Owner_ID) VALUES (10, 'Las', 'Siamese', 7, '', 2, 6);
+INSERT INTO Pet(Pet_ID, Nick, Breed, Age, Description, Vacine_ID, Pet_Type_ID, Owner_ID) VALUES (1, 'Bobik', 'unknown', 3, NULL, 1, 1, 1);
+INSERT INTO Pet(Pet_ID, Nick, Breed, Age, Description, Vacine_ID, Pet_Type_ID, Owner_ID) VALUES (2, 'Musia', NULL, 12, NULL, 2, 2, 1);
+INSERT INTO Pet(Pet_ID, Nick, Breed, Age, Description, Vacine_ID, Pet_Type_ID, Owner_ID) VALUES (3, 'Katok', NULL, 2, 'crazy guy', 1, 2, 1);
+INSERT INTO Pet(Pet_ID, Nick, Breed, Age, Description, Vacine_ID, Pet_Type_ID, Owner_ID) VALUES (4, 'Apelsin', 'poodle', 5, NULL, 1, 1, 2);
+INSERT INTO Pet(Pet_ID, Nick, Breed, Age, Description, Vacine_ID, Pet_Type_ID, Owner_ID) VALUES (5, 'Partizan', 'Siamese', 5, 'very big', 1, 2, 2);
+INSERT INTO Pet(Pet_ID, Nick, Breed, Age, Description, Vacine_ID, Pet_Type_ID, Owner_ID) VALUES (6, 'Daniel', 'spaniel', 14, NULL, 2, 1, 3);
+INSERT INTO Pet(Pet_ID, Nick, Breed, Age, Description, Vacine_ID, Pet_Type_ID, Owner_ID) VALUES (7, 'Model', NULL, 5, NULL, 1, 3, 4);
+INSERT INTO Pet(Pet_ID, Nick, Breed, Age, Description, Vacine_ID, Pet_Type_ID, Owner_ID) VALUES (8, 'Markiz', 'poodle', 1, NULL, 2, 1, 5);
+INSERT INTO Pet(Pet_ID, Nick, Breed, Age, Description, Vacine_ID, Pet_Type_ID, Owner_ID) VALUES (9, 'Zombi', 'unknown', 7, 'wild', 2, 2, 6);
+INSERT INTO Pet(Pet_ID, Nick, Breed, Age, Description, Vacine_ID, Pet_Type_ID, Owner_ID) VALUES (10, 'Las', 'Siamese', 7, '', 1, 2, 6);
 
 INSERT INTO Service(Service_ID, NAME) VALUES (1, 'Walking');
 INSERT INTO Service(Service_ID, NAME) VALUES (2, 'Combing');
@@ -238,3 +247,4 @@ INSERT INTO Order1(Order_ID, Owner_ID, Service_ID, Pet_ID, Employee_ID, Time_Ord
        VALUES (22, 4, 3, 7, 1, '2023-10-02 11:00', 0, 0);
 INSERT INTO Order1(Order_ID, Owner_ID, Service_ID, Pet_ID, Employee_ID, Time_Order, Is_Done, Mark) 
        VALUES (23, 5, 2, 8, 2, '2023-10-03 16:00', 0, 0);
+
