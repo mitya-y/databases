@@ -1,5 +1,6 @@
 CREATE TABLE IF NOT EXISTS Client(
     client_id     INTEGER      NOT NULL,
+    active           BOOLEAN  NOT NULL,
     name          VARCHAR(20)  NOT NULL,
     surname       VARCHAR(20)  NOT NULL,
     phone         VARCHAR(15)  NOT NULL,
@@ -26,7 +27,9 @@ CREATE TABLE IF NOT EXISTS Valute(
 
 CREATE TABLE IF NOT EXISTS Account(
     account_id       INTEGER  NOT NULL,
+    active           BOOLEAN  NOT NULL,
     valute_id        INTEGER  NOT NULL,
+    value            FLOAT    NOT NULL,
     client_id        INTEGER  NOT NULL,
     account_type_id  INTEGER  NOT NULL,
     create_date      TIMESTAMP DEFAULT NOW() NOT NULL,

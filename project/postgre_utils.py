@@ -21,7 +21,7 @@ def execute_query_callback(query_func, *args):
         if connection:
             cursor.close()
             connection.close()
-            print("Connection closed")
+            # print("Connection closed")
     return result
 
 def execute_query(query: str):
