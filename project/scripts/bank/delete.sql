@@ -1,3 +1,7 @@
+DROP VIEW AllTranslates;
+DROP VIEW ActiveAccountsStat;
+DROP VIEW ActualOperation;
+
 DROP TABLE WithdrawalOperation;
 DROP TABLE ReplenishmentOperation;
 DROP TABLE RecieveOperation;

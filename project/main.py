@@ -43,16 +43,60 @@ def test_triggers():
     res = execute_query("SELECT * FROM Account WHERE client_id = 3;")
     pprint(res)
 
+def test_views():
+    print()
+    print("test view 1")
+    # show all accounts of Мария Петорова
+    query = "SELECT * FROM ActiveAccountsStat WHERE\
+             client_name = 'Мария' AND client_surname = 'Петрова'"
+    res = execute_query(query + ';')
+    pprint(res)
+
+    # delete kredit account
+    execute_query(f"DELETE FROM Account WHERE account_id IN\
+                    (SELECT account_id FROM ({query}) WHERE account_type = 'Кредитный');")
+    res = execute_query(query + ';')
+    pprint(res)
+
+    print()
+    print("test view 3")
+    res = execute_query("SELECT * FROM AllTranslates;")
+    pprint(res)
+
+
+
+
+#==========================================================================
+# test part
+#==========================================================================
+
 execute_query_file("scripts/bank/create.sql")
 print("tables were created")
+
 execute_query_file("scripts/bank/add_fk.sql")
 print("fk were added")
+
 execute_query_file("scripts/triggers.sql")
 print("triggers were added")
+
+execute_query_file("scripts/views.sql")
+print("views were added")
+
 execute_query_file("scripts/bank/fill.sql")
 print("tables were filled by initial data")
 
+print()
+print('----------------------')
+print('tests')
+
 test_triggers()
+test_views()
+
+print()
+print('----------------------')
+print('delete')
+print()
+
 
 execute_query_file("scripts/bank/delete.sql")
 print("tables was droped")
