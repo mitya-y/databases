@@ -63,12 +63,42 @@ def test_views():
     res = execute_query("SELECT * FROM AllTranslates;")
     pprint(res)
 
+def test_functions():
+    print()
+    print("test function 1")
+    execute_query("CALL AddNewClientWithDefaultAccount('Митя', 'Бебра', '+73047', 'USD')")
+
+    res = execute_query("SELECT * FROM Client WHERE name = 'Митя'")
+    pprint(res)
+    res = execute_query("SELECT * FROM ActiveAccountsStat WHERE client_name = 'Митя'")
+    pprint(res)
+
+    print()
+    print("test function 2")
+    res = execute_query("SELECT GetClientAccountNumber(4)")
+    pprint(res)
+    res = execute_query("SELECT GetClientAccountNumber(6)")
+    pprint(res)
+
+    print("test function 3")
+    execute_query("UPDATE Account SET value = 47.30 WHERE client_id = 6;")
+
+    # Mitya tranlsate 30 USD to RUB kredit account of Dmitriy Kozlov
+    res = execute_query("SELECT * FROM Account WHERE account_id IN (107, 110);")
+    pprint(res)
+    execute_query("CALL TranslateMoneys(110, 107, 30.0);")
+    res = execute_query("SELECT * FROM Account WHERE account_id IN (107, 110);")
+    pprint(res)
 
 
 
 #==========================================================================
 # test part
 #==========================================================================
+
+# execute_query_file("scripts/functions.sql")
+# # execute_query_file("scripts/bank/delete.sql")
+# exit()
 
 execute_query_file("scripts/bank/create.sql")
 print("tables were created")
@@ -82,6 +112,9 @@ print("triggers were added")
 execute_query_file("scripts/views.sql")
 print("views were added")
 
+execute_query_file("scripts/functions.sql")
+print("functions were added")
+
 execute_query_file("scripts/bank/fill.sql")
 print("tables were filled by initial data")
 
@@ -91,6 +124,7 @@ print('tests')
 
 test_triggers()
 test_views()
+test_functions()
 
 print()
 print('----------------------')

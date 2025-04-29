@@ -1,3 +1,7 @@
+DROP PROCEDURE AddNewClientWithDefaultAccount;
+DROP FUNCTION GetClientAccountNumber;
+DROP PROCEDURE TranslateMoneys;
+
 DROP VIEW AllTranslates;
 DROP VIEW ActiveAccountsStat;
 DROP VIEW ActualOperation;
