@@ -1,9 +1,8 @@
-from postgre_utils import execute_query_file
 from postgre_utils import execute_query
+from database import create_db, delete_db
 from pprint import pprint
 
 def test_triggers():
-    print()
     print("test trigger 1")
     # this must be successfull
     execute_query("DELETE FROM Account WHERE account_id = 101;")
@@ -44,7 +43,6 @@ def test_triggers():
     pprint(res)
 
 def test_views():
-    print()
     print("test view 1")
     # show all accounts of Мария Петорова
     query = "SELECT * FROM ActiveAccountsStat WHERE\
@@ -64,7 +62,6 @@ def test_views():
     pprint(res)
 
 def test_functions():
-    print()
     print("test function 1")
     execute_query("CALL AddNewClientWithDefaultAccount('Митя', 'Бебра', '+73047', 'USD')")
 
@@ -91,46 +88,35 @@ def test_functions():
     pprint(res)
 
 
-
 #==========================================================================
 # test part
 #==========================================================================
+
+def print_header(test_name: str):
+    delim = '----------------------------'
+    text = f'* tests {test_name}'
+    text += ' ' * (len(delim) - len(text) - 1)
+    text += '*'
+
+    print('')
+    print(delim)
+    print(text)
+    print(delim)
+    print('')
 
 # execute_query_file("scripts/functions.sql")
 # # execute_query_file("scripts/bank/delete.sql")
 # exit()
 
-execute_query_file("scripts/bank/create.sql")
-print("tables were created")
+create_db()
 
-execute_query_file("scripts/bank/add_fk.sql")
-print("fk were added")
-
-execute_query_file("scripts/triggers.sql")
-print("triggers were added")
-
-execute_query_file("scripts/views.sql")
-print("views were added")
-
-execute_query_file("scripts/functions.sql")
-print("functions were added")
-
-execute_query_file("scripts/bank/fill.sql")
-print("tables were filled by initial data")
-
-print()
-print('----------------------')
-print('tests')
-
+print_header('triggers')
 test_triggers()
+
+print_header('views')
 test_views()
+
+print_header('functions')
 test_functions()
 
-print()
-print('----------------------')
-print('delete')
-print()
-
-
-execute_query_file("scripts/bank/delete.sql")
-print("tables was droped")
+delete_db()
