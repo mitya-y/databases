@@ -72,11 +72,12 @@ def test_functions():
 
     print()
     print("test function 2")
-    res = execute_query("SELECT GetClientAccountNumber(4)")
+    res = execute_query("SELECT ConvertValute(2, 1, 5)")
     pprint(res)
-    res = execute_query("SELECT GetClientAccountNumber(6)")
+    res = execute_query("SELECT ConvertValute(4, 4, 47)")
     pprint(res)
 
+    print()
     print("test function 3")
     execute_query("UPDATE Account SET value = 47.30 WHERE client_id = 6;")
 

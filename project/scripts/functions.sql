@@ -21,18 +21,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- количество счетов у клиента
-CREATE OR REPLACE FUNCTION GetClientAccountNumber(target_client_id INTEGER) RETURNS INTEGER AS $$
-DECLARE
-    answer INTEGER;
-BEGIN
-    SELECT COUNT(*) INTO answer FROM Account
-    WHERE Account.client_id = target_client_id AND Account.active = TRUE;
-    RETURN answer;
-END;
-$$ LANGUAGE plpgsql;
-
--- количество счетов у клиента
+-- Конвертация валют
 CREATE OR REPLACE FUNCTION ConvertValute(from_val_id INTEGER, to_val_id INTEGER, value FLOAT) RETURNS FLOAT AS $$
 DECLARE
     in_rubles FLOAT;

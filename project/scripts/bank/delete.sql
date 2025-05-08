@@ -1,5 +1,5 @@
 DROP PROCEDURE AddNewClientWithDefaultAccount;
-DROP FUNCTION GetClientAccountNumber;
+DROP FUNCTION ConvertValute;
 DROP PROCEDURE TranslateMoneys;
 
 DROP VIEW AllTranslates;
