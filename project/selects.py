@@ -125,9 +125,9 @@ def select11():
     print()
     print('Количество счетов у каждого клиента')
     query = "SELECT Client.name, Client.surname, COUNT(*) " \
-    "FROM Client, Account WHERE Client.client_id = Account.client_id " \
-    "AND Account.active AND Client.active " \
-    "GROUP BY Client.client_id"
+            "FROM Client, Account WHERE Client.client_id = Account.client_id " \
+            "AND Account.active AND Client.active " \
+            "GROUP BY Client.client_id"
     res = execute_query(query)
     pprint(res)
 
