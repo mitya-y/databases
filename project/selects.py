@@ -7,20 +7,21 @@ def select1():
     print('Сумма всех денег на всех счетах клиентов в рублях:')
     res = execute_query("SELECT Client.name, Client.surname," \
                         "       (SELECT SUM(ConvertValute(valute_id, 1, value))" \
-                        "        FROM Account WHERE Account.client_id = Client.client_id)" \
-                        "FROM Client;")
+                        "        FROM Account WHERE Account.client_id = Client.client_id" \
+                        "                           AND Account.active)" \
+                        "FROM Client WHERE Client.active;")
     pprint(res)
 
 def select2():
     print('')
     print('Все траты клиента Мария Петрова в рублях:')
     query1 = "SELECT ConvertValute(Account.valute_id, 1, TranslateOperation.value) " \
-             "FROM Account, TranslateOperation, Operation " \
+             "FROM Account, TranslateOperation, ActualOperation AS Operation " \
              "WHERE Account.client_id = 2 AND" \
              "      Operation.account_id = Account.account_id AND" \
              "      TranslateOperation.operation_id = Operation.operation_id"
     query2 = "SELECT ConvertValute(Account.valute_id, 1, WithdrawalOperation.value) " \
-             "FROM Account, WithdrawalOperation, Operation " \
+             "FROM Account, WithdrawalOperation, ActualOperation AS Operation " \
              "WHERE Account.client_id = 2 AND" \
              "      Operation.account_id = Account.account_id AND" \
              "      WithdrawalOperation.operation_id = Operation.operation_id"
@@ -31,12 +32,12 @@ def select3():
     print('')
     print('Все пополнения клиента Мария Петрова в рублях:')
     query1 = "SELECT ConvertValute(Account.valute_id, 1, RecieveOperation.value) " \
-             "FROM Account, RecieveOperation, Operation " \
+             "FROM Account, RecieveOperation, ActualOperation AS Operation " \
              "WHERE Account.client_id = 2 AND" \
              "      Operation.account_id = Account.account_id AND" \
              "      RecieveOperation.operation_id = Operation.operation_id"
     query2 = "SELECT ConvertValute(Account.valute_id, 1, ReplenishmentOperation.value) " \
-             "FROM Account, ReplenishmentOperation, Operation " \
+             "FROM Account, ReplenishmentOperation, ActualOperation AS Operation " \
              "WHERE Account.client_id = 2 AND" \
              "      Operation.account_id = Account.account_id AND" \
              "      ReplenishmentOperation.operation_id = Operation.operation_id"
@@ -48,7 +49,8 @@ def select4():
     print('Количество денег на всех счетах каждой авлюты:')
     res = execute_query("SELECT name, " \
                         "       (SELECT SUM(value) FROM Account" \
-                        "        WHERE Account.valute_id = Valute.valute_id)" \
+                        "        WHERE Account.valute_id = Valute.valute_id" \
+                        "              AND Account.active)" \
                         "FROM Valute")
     pprint(res)
 
@@ -57,8 +59,9 @@ def select5():
     print('Самый состоятельный клиент:')
     query = "SELECT Client.name, Client.surname," \
                         "       (SELECT SUM(ConvertValute(valute_id, 1, value)) AS value" \
-                        "        FROM Account WHERE Account.client_id = Client.client_id)" \
-                        "FROM Client"
+                        "        FROM Account WHERE Account.client_id = Client.client_id" \
+                        "                           AND Account.active)" \
+                        "FROM Client WHERE Client.active"
     max_value = f"SELECT MAX(value) FROM ({query})"
     res = execute_query(f"SELECT name, surname FROM ({query}) " \
                         f"WHERE value = ({max_value})")
@@ -70,19 +73,20 @@ def select6():
     query = "SELECT Client.name, Client.surname FROM Client, Account, AccountType " \
             "WHERE Client.client_id = Account.client_id" \
             "      AND Account.account_type_id = AccountType.account_type_id" \
-            "      AND AccountType.Name = 'Кредитный' AND Account.value < 0"
+            "      AND AccountType.Name = 'Кредитный' AND Account.value < 0" \
+            "      AND Client.active AND Account.active"
     res = execute_query(query)
     pprint(res)
 
 def select7():
     print()
     print('Сколько операций провел каждый клиент:')
-    query1 = "SELECT account_id AS acc_id, COUNT(*) AS number FROM Operation GROUP BY account_id"
+    query1 = "SELECT account_id AS acc_id, COUNT(*) AS number FROM ActualOperation GROUP BY account_id"
     query2 = "SELECT Client.name, Client.surname, " \
             f"       (SELECT SUM(Tmp.number) FROM ({query1}) AS Tmp, Account " \
-             "        WHERE Tmp.acc_id = Account.account_id" \
+             "        WHERE Tmp.acc_id = Account.account_id AND Account.active " \
              "        AND Account.client_id = Client.client_id) " \
-             "FROM Client GROUP BY client_id"
+             "FROM Client WHERE Client.active GROUP BY client_id"
     res = execute_query(query2)
     pprint(res)
 
@@ -91,6 +95,7 @@ def select8():
     print('Клиенты, у которых больше 1 счета:')
     query = "SELECT Client.name, Client.surname FROM Client, Account " \
             "WHERE Client.client_id = Account.client_id " \
+            "AND Client.active AND Account.active " \
             "GROUP BY Client.client_id HAVING COUNT(*) > 1"
     res = execute_query(query)
     pprint(res)
@@ -101,7 +106,8 @@ def select9():
     print('Владелец самого старого счета:')
     query = "SELECT Client.name, Client.surname FROM Client, Account " \
             "WHERE Client.client_id = Account.client_id " \
-            "AND Account.create_date = (SELECT MIN(create_date) FROM Account)"
+            "AND Account.create_date = (SELECT MIN(create_date) FROM Account)" \
+            "AND Client.active AND Account.active"
     res = execute_query(query)
     pprint(res)
 
@@ -120,6 +126,7 @@ def select11():
     print('Количество счетов у каждого клиента')
     query = "SELECT Client.name, Client.surname, COUNT(*) " \
     "FROM Client, Account WHERE Client.client_id = Account.client_id " \
+    "AND Account.active AND Client.active " \
     "GROUP BY Client.client_id"
     res = execute_query(query)
     pprint(res)
@@ -129,13 +136,13 @@ def select12():
     print()
     print('Тип последней операции для каждого клиента')
     client_operations = "SELECT Client.client_id, OperationType.name, Operation.date " \
-                        "FROM Operation, Client, Account, OperationType " \
+                        "FROM ActualOperation AS Operation, Client, Account, OperationType " \
                         "WHERE Operation.account_id = Account.account_id " \
                         "AND Account.client_id = Client.client_id " \
                         "AND Operation.operation_type_id = OperationType.operation_type_id"
     query = "SELECT Client.name, Client.surname, Oper.name " \
            f"FROM Client, ({client_operations}) AS Oper " \
-            "WHERE Oper.client_id = Client.client_id AND " \
+            "WHERE Oper.client_id = Client.client_id AND Client.active AND " \
            f"Oper.date = (SELECT MAX(date) FROM ({client_operations}) AS Oper " \
             "             WHERE Oper.client_id = Client.client_id)"
     res = execute_query(query)
