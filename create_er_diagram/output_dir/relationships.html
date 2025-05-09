@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>pet-db.public</title>
+        <title>bank.public</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
@@ -46,7 +46,7 @@
                 <nav class="navbar navbar-static-top">
                     <div class="container">
                         <div class="navbar-header">
-                            <a href="index.html" class="navbar-brand"><b>pet-db</b></a><span class="navbar-brand" style="padding-left: 0">.public</span>
+                            <a href="index.html" class="navbar-brand"><b>bank</b></a><span class="navbar-brand" style="padding-left: 0">.public</span>
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
                         </div>
 
@@ -89,37 +89,73 @@
                                 <ul class="nav nav-tabs pull-left ui-sortable-handle">
                                     <li class="active"><a href="#compactDegreeImg-chart" data-toggle="tab" aria-expanded="true">Compact</a></li>
                                     <li class=""><a href="#largeDegreeImg-chart" data-toggle="tab" aria-expanded="true">Large</a></li>
+                                    <li class=""><a href="#compactimpliedDegreeImg-chart" data-toggle="tab" aria-expanded="true">Compact Implied</a></li>
+                                    <li class=""><a href="#largeimpliedDegreeImg-chart" data-toggle="tab" aria-expanded="true">Large Implied</a></li>
                                 </ul>
                                 <div class="tab-content no-padding">
                                     <div class="chart tab-pane active" id="compactDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="compactRelationshipsDiagram" name="compactRelationshipsDiagram">
-<area shape="rect" id="node1" href="tables/employee_service.html" target="_top" title="employee_service" alt="" coords="626,527,869,679">
-<area shape="rect" id="node5" href="tables/employee.html" target="_top" title="employee" alt="" coords="405,523,576,675">
-<area shape="rect" id="node6" href="tables/service.html" target="_top" title="service" alt="" coords="417,381,564,505">
-<area shape="rect" id="node2" href="tables/order1.html" target="_top" title="order1" alt="" coords="667,268,828,509">
-<area shape="rect" id="node3" href="tables/owner.html" target="_top" title="owner" alt="" coords="200,311,350,463">
-<area shape="rect" id="node9" href="tables/pet.html" target="_top" title="pet" alt="" coords="414,147,566,329">
-<area shape="rect" id="node4" href="tables/person.html" target="_top" title="person" alt="" coords="5,395,150,518">
-<area shape="rect" id="node7" href="tables/vacine.html" target="_top" title="vacine" alt="" coords="662,24,834,206">
-<area shape="rect" id="node8" href="tables/vacinetype.html" target="_top" title="vacinetype" alt="" coords="399,5,582,129">
-<area shape="rect" id="node10" href="tables/pet_type.html" target="_top" title="pet_type" alt="" coords="194,169,355,293">
+<area shape="rect" id="node1" href="tables/account.html" target="_top" title="account" alt="" coords="252,388,446,599">
+<area shape="rect" id="node3" href="tables/accounttype.html" target="_top" title="accounttype" alt="" coords="5,588,200,711">
+<area shape="rect" id="node7" href="tables/valute.html" target="_top" title="valute" alt="" coords="26,305,178,429">
+<area shape="rect" id="node9" href="tables/client.html" target="_top" title="client" alt="" coords="36,447,169,570">
+<area shape="rect" id="node2" href="tables/translateoperation.html" target="_top" title="translateoperation" alt="" coords="775,288,1028,441">
+<area shape="rect" id="node5" href="tables/operation.html" target="_top" title="operation" alt="" coords="498,224,707,406">
+<area shape="rect" id="node4" href="tables/recieveoperation.html" target="_top" title="recieveoperation" alt="" coords="783,459,1020,611">
+<area shape="rect" id="node6" href="tables/operationtype.html" target="_top" title="operationtype" alt="" coords="244,247,454,370">
+<area shape="rect" id="node8" href="tables/withdrawaloperation.html" target="_top" title="withdrawaloperation" alt="" coords="766,5,1038,129">
+<area shape="rect" id="node10" href="tables/replenishmentoperation.html" target="_top" title="replenishmentoperation" alt="" coords="751,147,1052,270">
 </map>
                                         <a name='diagram'><img id="compactDegreeImg" src="diagrams/summary/relationships.real.compact.png" usemap="#compactRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>
                                     <div class="chart tab-pane " id="largeDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="largeRelationshipsDiagram" name="largeRelationshipsDiagram">
-<area shape="rect" id="node1" href="tables/employee_service.html" target="_top" title="employee_service" alt="" coords="626,671,869,827">
-<area shape="rect" id="node5" href="tables/employee.html" target="_top" title="employee" alt="" coords="405,623,576,779">
-<area shape="rect" id="node6" href="tables/service.html" target="_top" title="service" alt="" coords="417,479,564,605">
-<area shape="rect" id="node2" href="tables/order1.html" target="_top" title="order1" alt="" coords="667,321,828,653">
-<area shape="rect" id="node3" href="tables/owner.html" target="_top" title="owner" alt="" coords="200,421,350,577">
-<area shape="rect" id="node9" href="tables/pet.html" target="_top" title="pet" alt="" coords="414,151,566,424">
-<area shape="rect" id="node4" href="tables/person.html" target="_top" title="person" alt="" coords="5,571,150,785">
-<area shape="rect" id="node7" href="tables/vacine.html" target="_top" title="vacine" alt="" coords="662,5,834,220">
-<area shape="rect" id="node8" href="tables/vacinetype.html" target="_top" title="vacinetype" alt="" coords="399,7,582,133">
-<area shape="rect" id="node10" href="tables/pet_type.html" target="_top" title="pet_type" alt="" coords="194,277,355,404">
+<area shape="rect" id="node1" href="tables/account.html" target="_top" title="account" alt="" coords="252,512,446,785">
+<area shape="rect" id="node3" href="tables/accounttype.html" target="_top" title="accounttype" alt="" coords="5,891,200,1017">
+<area shape="rect" id="node7" href="tables/valute.html" target="_top" title="valute" alt="" coords="26,456,178,612">
+<area shape="rect" id="node9" href="tables/client.html" target="_top" title="client" alt="" coords="36,629,169,873">
+<area shape="rect" id="node2" href="tables/translateoperation.html" target="_top" title="translateoperation" alt="" coords="775,411,1028,596">
+<area shape="rect" id="node5" href="tables/operation.html" target="_top" title="operation" alt="" coords="498,343,707,528">
+<area shape="rect" id="node4" href="tables/recieveoperation.html" target="_top" title="recieveoperation" alt="" coords="783,613,1020,799">
+<area shape="rect" id="node6" href="tables/operationtype.html" target="_top" title="operationtype" alt="" coords="244,368,454,495">
+<area shape="rect" id="node8" href="tables/withdrawaloperation.html" target="_top" title="withdrawaloperation" alt="" coords="766,5,1038,191">
+<area shape="rect" id="node10" href="tables/replenishmentoperation.html" target="_top" title="replenishmentoperation" alt="" coords="751,208,1052,393">
 </map>
                                         <a name='diagram'><img id="largeDegreeImg" src="diagrams/summary/relationships.real.large.png" usemap="#largeRelationshipsDiagram" class="diagram" border="0" align="left"></a>
+                                    </div>
+                                    <div class="chart tab-pane " id="compactimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
+                                        <map id="compactImpliedRelationshipsDiagram" name="compactImpliedRelationshipsDiagram">
+<area shape="rect" id="node1" href="tables/account.html" target="_top" title="account" alt="" coords="252,483,446,694">
+<area shape="rect" id="node3" href="tables/accounttype.html" target="_top" title="accounttype" alt="" coords="5,683,200,806">
+<area shape="rect" id="node7" href="tables/valute.html" target="_top" title="valute" alt="" coords="26,400,178,524">
+<area shape="rect" id="node9" href="tables/client.html" target="_top" title="client" alt="" coords="36,542,169,665">
+<area shape="rect" id="node2" href="tables/translateoperation.html" target="_top" title="translateoperation" alt="" coords="817,632,1070,785">
+<area shape="rect" id="node5" href="tables/operation.html" target="_top" title="operation" alt="" coords="519,320,728,502">
+<area shape="rect" id="node4" href="tables/recieveoperation.html" target="_top" title="recieveoperation" alt="" coords="825,462,1062,614">
+<area shape="rect" id="node6" href="tables/operationtype.html" target="_top" title="operationtype" alt="" coords="244,207,454,330">
+<area shape="rect" id="node8" href="tables/withdrawaloperation.html" target="_top" title="withdrawaloperation" alt="" coords="808,320,1080,444">
+<area shape="rect" id="node10" href="tables/replenishmentoperation.html" target="_top" title="replenishmentoperation" alt="" coords="793,179,1094,302">
+<area shape="rect" id="node11" href="tables/actualoperation.html" target="_top" title="actualoperation" alt="" coords="832,5,1056,161">
+<area shape="rect" id="node12" href="tables/activeaccountsstat.html" target="_top" title="activeaccountsstat" alt="" coords="498,599,749,696">
+</map>
+                                        <a name='diagram'><img id="compactimpliedDegreeImg" src="diagrams/summary/relationships.implied.compact.png" usemap="#compactImpliedRelationshipsDiagram" class="diagram" border="0" align="left"></a>
+                                    </div>
+                                    <div class="chart tab-pane " id="largeimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
+                                        <map id="largeImpliedRelationshipsDiagram" name="largeImpliedRelationshipsDiagram">
+<area shape="rect" id="node1" href="tables/account.html" target="_top" title="account" alt="" coords="252,582,446,855">
+<area shape="rect" id="node3" href="tables/accounttype.html" target="_top" title="accounttype" alt="" coords="5,960,200,1087">
+<area shape="rect" id="node7" href="tables/valute.html" target="_top" title="valute" alt="" coords="26,526,178,682">
+<area shape="rect" id="node9" href="tables/client.html" target="_top" title="client" alt="" coords="36,699,169,943">
+<area shape="rect" id="node2" href="tables/translateoperation.html" target="_top" title="translateoperation" alt="" coords="817,790,1070,975">
+<area shape="rect" id="node5" href="tables/operation.html" target="_top" title="operation" alt="" coords="519,384,728,570">
+<area shape="rect" id="node4" href="tables/recieveoperation.html" target="_top" title="recieveoperation" alt="" coords="825,587,1062,772">
+<area shape="rect" id="node6" href="tables/operationtype.html" target="_top" title="operationtype" alt="" coords="244,254,454,380">
+<area shape="rect" id="node8" href="tables/withdrawaloperation.html" target="_top" title="withdrawaloperation" alt="" coords="808,384,1080,570">
+<area shape="rect" id="node10" href="tables/replenishmentoperation.html" target="_top" title="replenishmentoperation" alt="" coords="793,182,1094,367">
+<area shape="rect" id="node11" href="tables/actualoperation.html" target="_top" title="actualoperation" alt="" coords="832,5,1056,165">
+<area shape="rect" id="node12" href="tables/activeaccountsstat.html" target="_top" title="activeaccountsstat" alt="" coords="498,696,749,973">
+</map>
+                                        <a name='diagram'><img id="largeimpliedDegreeImg" src="diagrams/summary/relationships.implied.large.png" usemap="#largeImpliedRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>
                                 </div>
                             </div>

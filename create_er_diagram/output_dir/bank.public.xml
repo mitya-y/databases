@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?><database name="bank" schema="public" type="PostgreSQL - 17.4">
+   <tables>
+      <table name="account" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="account_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <child column="account_id" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="public" table="activeaccountsstat"/>
+            <child column="account_id" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="public" table="actualoperation"/>
+            <child column="account_id" foreignKey="fk_operation_account" implied="false" onDeleteCascade="false" schema="public" table="operation"/>
+            <child column="sender_account_id" foreignKey="fk_recieveoperation_client" implied="false" onDeleteCascade="false" schema="public" table="recieveoperation"/>
+            <child column="reciever_account_id" foreignKey="fk_translateoperation_client" implied="false" onDeleteCascade="false" schema="public" table="translateoperation"/>
+         </column>
+         <column autoUpdated="false" defaultValue="true" digits="0" id="1" name="active" nullable="true" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="valute_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="valute_id" foreignKey="fk_account_valute" implied="false" onDeleteCascade="false" schema="public" table="valute"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="17" id="3" name="value" nullable="false" remarks="" size="17" type="float8" typeCode="8"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="client_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="client_id" foreignKey="fk_account_client" implied="false" onDeleteCascade="false" schema="public" table="client"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="account_type_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="account_type_id" foreignKey="fk_account_accounttype" implied="false" onDeleteCascade="false" schema="public" table="accounttype"/>
+         </column>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="6" name="create_date" nullable="false" remarks="" size="29" type="timestamp" typeCode="93"/>
+         <primaryKey column="account_id" sequenceNumberInPK="1"/>
+         <index name="account_fk" unique="true">
+            <column ascending="true" name="account_id"/>
+         </index>
+      </table>
+      <table name="accounttype" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="account_type_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <child column="account_type_id" foreignKey="fk_account_accounttype" implied="false" onDeleteCascade="false" schema="public" table="account"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="name" nullable="false" remarks="" size="20" type="varchar" typeCode="12"/>
+         <primaryKey column="account_type_id" sequenceNumberInPK="1"/>
+         <index name="account_type_pk" unique="true">
+            <column ascending="true" name="account_type_id"/>
+         </index>
+      </table>
+      <table name="activeaccountsstat" numRows="0" remarks="" schema="public" type="VIEW" viewSql=" SELECT account.account_id,&#10;    accounttype.name AS account_type,&#10;    account.create_date,&#10;    account.value,&#10;    valute.name AS valute,&#10;    client.name AS client_name,&#10;    client.surname AS client_surname,&#10;    client.phone&#10;   FROM account,&#10;    client,&#10;    accounttype,&#10;    valute&#10;  WHERE ((account.client_id = client.client_id) AND (account.account_type_id = accounttype.account_type_id) AND (account.valute_id = valute.valute_id) AND (account.active = true));">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="account_id" nullable="true" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="account_id" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="public" table="account"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="account_type" nullable="true" remarks="" size="20" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="2" name="create_date" nullable="true" remarks="" size="29" type="timestamp" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="17" id="3" name="value" nullable="true" remarks="" size="17" type="float8" typeCode="8"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="valute" nullable="true" remarks="" size="20" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="client_name" nullable="true" remarks="" size="20" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="client_surname" nullable="true" remarks="" size="20" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="phone" nullable="true" remarks="" size="15" type="varchar" typeCode="12"/>
+      </table>
+      <table name="actualoperation" numRows="0" remarks="" schema="public" type="VIEW" viewSql=" SELECT operation.operation_id,&#10;    operation.operation_type_id,&#10;    operation.account_id,&#10;    operation.date&#10;   FROM operation,&#10;    account&#10;  WHERE ((operation.account_id = account.account_id) AND (account.active = true));">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="operation_id" nullable="true" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="operation_id" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="public" table="operation"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="operation_type_id" nullable="true" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="operation_type_id" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="public" table="operationtype"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="account_id" nullable="true" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="account_id" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="public" table="account"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="3" name="date" nullable="true" remarks="" size="29" type="timestamp" typeCode="93"/>
+      </table>
+      <table name="alltranslates" numRows="0" remarks="" schema="public" type="VIEW" viewSql=" SELECT senderaccount.client_name AS sender_name,&#10;    senderaccount.client_surname AS sender_surname,&#10;    recieveraccount.client_name AS reciever_name,&#10;    recieveraccount.client_surname AS reciever_surname,&#10;    translateoperation.value,&#10;    translateoperation.prev_value,&#10;    senderaccount.valute&#10;   FROM activeaccountsstat senderaccount,&#10;    activeaccountsstat recieveraccount,&#10;    translateoperation,&#10;    operation&#10;  WHERE ((translateoperation.operation_id = operation.operation_id) AND (senderaccount.account_id = operation.account_id) AND (recieveraccount.account_id = translateoperation.reciever_account_id));">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="sender_name" nullable="true" remarks="" size="20" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="sender_surname" nullable="true" remarks="" size="20" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="reciever_name" nullable="true" remarks="" size="20" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="reciever_surname" nullable="true" remarks="" size="20" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="17" id="4" name="value" nullable="true" remarks="" size="17" type="float8" typeCode="8"/>
+         <column autoUpdated="false" defaultValue="null" digits="17" id="5" name="prev_value" nullable="true" remarks="" size="17" type="float8" typeCode="8"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="valute" nullable="true" remarks="" size="20" type="varchar" typeCode="12"/>
+      </table>
+      <table name="client" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="client_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <child column="client_id" foreignKey="fk_account_client" implied="false" onDeleteCascade="false" schema="public" table="account"/>
+         </column>
+         <column autoUpdated="false" defaultValue="true" digits="0" id="1" name="active" nullable="true" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="name" nullable="false" remarks="" size="20" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="surname" nullable="false" remarks="" size="20" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="phone" nullable="false" remarks="" size="15" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="percent" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <primaryKey column="client_id" sequenceNumberInPK="1"/>
+         <index name="client_pk" unique="true">
+            <column ascending="true" name="client_id"/>
+         </index>
+      </table>
+      <table name="operation" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="operation_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <child column="operation_id" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="public" table="actualoperation"/>
+            <child column="operation_id" foreignKey="fk_recieveoperation_operation" implied="false" onDeleteCascade="false" schema="public" table="recieveoperation"/>
+            <child column="operation_id" foreignKey="fk_replenishmentoperation_operation" implied="false" onDeleteCascade="false" schema="public" table="replenishmentoperation"/>
+            <child column="operation_id" foreignKey="fk_translateoperation_operation" implied="false" onDeleteCascade="false" schema="public" table="translateoperation"/>
+            <child column="operation_id" foreignKey="fk_withdrawaloperation_operation" implied="false" onDeleteCascade="false" schema="public" table="withdrawaloperation"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="operation_type_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="operation_type_id" foreignKey="fk_operation_operationtype" implied="false" onDeleteCascade="false" schema="public" table="operationtype"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="account_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="account_id" foreignKey="fk_operation_account" implied="false" onDeleteCascade="false" schema="public" table="account"/>
+         </column>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="3" name="date" nullable="false" remarks="" size="29" type="timestamp" typeCode="93"/>
+         <primaryKey column="operation_id" sequenceNumberInPK="1"/>
+         <index name="operation_pk" unique="true">
+            <column ascending="true" name="operation_id"/>
+         </index>
+      </table>
+      <table name="operationtype" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="operation_type_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <child column="operation_type_id" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="public" table="actualoperation"/>
+            <child column="operation_type_id" foreignKey="fk_operation_operationtype" implied="false" onDeleteCascade="false" schema="public" table="operation"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="name" nullable="false" remarks="" size="20" type="varchar" typeCode="12"/>
+         <primaryKey column="operation_type_id" sequenceNumberInPK="1"/>
+         <index name="operation_type_pk" unique="true">
+            <column ascending="true" name="operation_type_id"/>
+         </index>
+      </table>
+      <table name="recieveoperation" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="operation_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="operation_id" foreignKey="fk_recieveoperation_operation" implied="false" onDeleteCascade="false" schema="public" table="operation"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="sender_account_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="account_id" foreignKey="fk_recieveoperation_client" implied="false" onDeleteCascade="false" schema="public" table="account"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="17" id="2" name="value" nullable="false" remarks="" size="17" type="float8" typeCode="8"/>
+         <column autoUpdated="false" defaultValue="null" digits="17" id="3" name="prev_value" nullable="false" remarks="" size="17" type="float8" typeCode="8"/>
+      </table>
+      <table name="replenishmentoperation" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="operation_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="operation_id" foreignKey="fk_replenishmentoperation_operation" implied="false" onDeleteCascade="false" schema="public" table="operation"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="17" id="1" name="value" nullable="false" remarks="" size="17" type="float8" typeCode="8"/>
+         <column autoUpdated="false" defaultValue="null" digits="17" id="2" name="prev_value" nullable="false" remarks="" size="17" type="float8" typeCode="8"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="atm_address" nullable="false" remarks="" size="50" type="varchar" typeCode="12"/>
+      </table>
+      <table name="translateoperation" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="operation_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="operation_id" foreignKey="fk_translateoperation_operation" implied="false" onDeleteCascade="false" schema="public" table="operation"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="reciever_account_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="account_id" foreignKey="fk_translateoperation_client" implied="false" onDeleteCascade="false" schema="public" table="account"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="17" id="2" name="value" nullable="false" remarks="" size="17" type="float8" typeCode="8"/>
+         <column autoUpdated="false" defaultValue="null" digits="17" id="3" name="prev_value" nullable="false" remarks="" size="17" type="float8" typeCode="8"/>
+      </table>
+      <table name="valute" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="valute_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <child column="valute_id" foreignKey="fk_account_valute" implied="false" onDeleteCascade="false" schema="public" table="account"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="name" nullable="false" remarks="" size="20" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="17" id="2" name="coef_to_rub" nullable="false" remarks="" size="17" type="float8" typeCode="8"/>
+         <primaryKey column="valute_id" sequenceNumberInPK="1"/>
+         <index name="valute_pk" unique="true">
+            <column ascending="true" name="valute_id"/>
+         </index>
+      </table>
+      <table name="withdrawaloperation" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="operation_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="operation_id" foreignKey="fk_withdrawaloperation_operation" implied="false" onDeleteCascade="false" schema="public" table="operation"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="17" id="1" name="value" nullable="false" remarks="" size="17" type="float8" typeCode="8"/>
+         <column autoUpdated="false" defaultValue="null" digits="17" id="2" name="prev_value" nullable="false" remarks="" size="17" type="float8" typeCode="8"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="atm_address" nullable="false" remarks="" size="50" type="varchar" typeCode="12"/>
+      </table>
+   </tables>
+</database>
