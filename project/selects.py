@@ -148,6 +148,25 @@ def select12():
     res = execute_query(query)
     pprint(res)
 
+def select13():
+    print('')
+    print('Добавим нового клиента:')
+    execute_query("INSERT INTO Client (client_id, name, surname, phone, percent) " \
+                              "VALUES (6, 'Новый', 'Клиент', '+79217777777', 7)")
+    pprint(execute_query("SELECT * FROM Client;"))
+    print()
+
+    print('Все клиенты и количество их счетов')
+    query = (
+        "SELECT Client.name, Client.surname, COUNT(Account.active) "
+        "FROM Client LEFT JOIN Account ON Client.client_id = Account.client_id AND Account.active "
+        "WHERE Client.active "
+        "GROUP BY Client.client_id"
+    )
+    res = execute_query(query)
+    pprint(res)
+
+
 create_db()
 
 select1()
@@ -162,5 +181,7 @@ select9()
 select10()
 select11()
 select12()
+select13()
+
 
 delete_db()

@@ -8,6 +8,9 @@ def create_db():
     execute_query_file("scripts/bank/add_fk.sql")
     print("fk were added")
 
+    execute_query_file("scripts/indexes.sql")
+    print("indexes were added")
+
     execute_query_file("scripts/triggers.sql")
     print("triggers were added")
 
